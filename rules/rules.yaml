@@ -1,0 +1,59 @@
+# NetScope firewall rules.
+#
+# Evaluation: top to bottom, first match wins. Anything not matched falls
+# through to `default`. Reply traffic for an ALLOWed flow is permitted by
+# the stateful connection table — you do not need an inbound rule for it.
+#
+# Fields:
+#   protocol : TCP | UDP | ICMP  (omit for any)
+#   src_ip   : literal IP or CIDR (omit for any)
+#   dst_ip   : literal IP or CIDR (omit for any)
+#   src_port : int | list[int] | 'lo-hi' (omit for any)
+#   dst_port : int | list[int] | 'lo-hi' (omit for any)
+
+default: DENY
+conn_ttl: 120
+
+rules:
+  # --- outbound essentials ------------------------------------------------
+  - name: allow-dns
+    action: ALLOW
+    protocol: UDP
+    dst_port: 53
+
+  - name: allow-http
+    action: ALLOW
+    protocol: TCP
+    dst_port: 80
+
+  - name: allow-https
+    action: ALLOW
+    protocol: TCP
+    dst_port: 443
+
+  - name: allow-ssh-outbound
+    action: ALLOW
+    protocol: TCP
+    dst_port: 22
+
+  # --- diagnostics --------------------------------------------------------
+  - name: allow-icmp-loopback
+    action: ALLOW
+    protocol: ICMP
+    src_ip: 127.0.0.0/8
+
+  - name: allow-loopback
+    action: ALLOW
+    src_ip: 127.0.0.0/8
+    dst_ip: 127.0.0.0/8
+
+  # --- explicit blocks ----------------------------------------------------
+  - name: block-telnet
+    action: DENY
+    protocol: TCP
+    dst_port: 23
+
+  - name: block-smb
+    action: DENY
+    protocol: TCP
+    dst_port: [139, 445]

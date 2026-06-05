@@ -36,6 +36,11 @@ is easy to read end to end.
                       +------------------+
 ```
 
+## Live demo
+
+![NetScope live capture](demo.gif)
+
+
 Each module is independent — `firewall.py` and `anomaly.py` have zero Scapy
 imports and operate purely on the `Packet` dataclass. That keeps the test
 suite fast and root-free.
@@ -49,6 +54,7 @@ suite fast and root-free.
 | `netscope/main.py` | CLI + lifecycle: load rules, start dashboard thread, run blocking capture loop. |
 
 ---
+
 
 ## Features
 

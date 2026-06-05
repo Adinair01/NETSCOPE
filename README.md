@@ -2,8 +2,6 @@
 
 > Python packet analyzer, stateful firewall, and anomaly detector with a live web dashboard.
 
-![NetScope dashboard demo](demo.gif)
-
 NetScope captures live network traffic, evaluates it against a YAML rule
 engine with stateful connection tracking, runs sliding-window anomaly
 detectors over the stream, and streams everything to a Flask + SSE dashboard

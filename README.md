@@ -2,6 +2,8 @@
 
 > Python packet analyzer, stateful firewall, and anomaly detector with a live web dashboard.
 
+![NetScope dashboard demo](demo.gif)
+
 NetScope captures live network traffic, evaluates it against a YAML rule
 engine with stateful connection tracking, runs sliding-window anomaly
 detectors over the stream, and streams everything to a Flask + SSE dashboard
@@ -75,6 +77,17 @@ pytest tests/ -v
 sudo .venv/bin/python -m netscope.main --iface en0 --rules rules/rules.yaml
 
 # Open the dashboard
+open http://127.0.0.1:8080
+```
+
+### Demo mode (no sudo)
+
+For a quick tour without raw-socket privileges, run the synthetic traffic
+generator. It injects a realistic mix of allowed flows, blocked traffic, and
+periodic port-scan bursts through the full pipeline:
+
+```bash
+.venv/bin/python -m netscope.demo
 open http://127.0.0.1:8080
 ```
 
